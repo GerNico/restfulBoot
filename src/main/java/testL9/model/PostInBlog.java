@@ -1,15 +1,21 @@
 package testL9.model;
 
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
+@Entity
 public class PostInBlog {
+    @Id
     private Integer id;
     private String title;
     private String content;
-    private List<String> tags;
+    @OneToMany
+    private List<Tag> tags;
 
-    public PostInBlog(Integer id, String title, String content, List<String> tags) {
+    public PostInBlog(Integer id, String title, String content, List<Tag> tags) {
         this.id=id;
         this.title = title;
         this.content = content;
@@ -50,43 +56,11 @@ public class PostInBlog {
         this.content = content;
     }
 
-    public List<String> getTags() {
+    public List<Tag> getTag() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTag(List<Tag> tags) {
         this.tags = tags;
-    }
-
-    @Override
-    public String toString() {
-        return "PostInBlog{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", tags=" + tags +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PostInBlog)) return false;
-
-        PostInBlog that = (PostInBlog) o;
-
-        if (!getId().equals(that.getId())) return false;
-        if (getTitle() != null ? !getTitle().equals(that.getTitle()) : that.getTitle() != null) return false;
-        if (getContent() != null ? !getContent().equals(that.getContent()) : that.getContent() != null) return false;
-        return getTags() != null ? getTags().equals(that.getTags()) : that.getTags() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId().hashCode();
-        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
-        result = 31 * result + (getContent() != null ? getContent().hashCode() : 0);
-        result = 31 * result + (getTags() != null ? getTags().hashCode() : 0);
-        return result;
     }
 }
