@@ -24,11 +24,7 @@ public class TagService {
         return tagsRepo.findOne(id);
     }
 
-    public void put(Tag tag) {
-        tagsRepo.save(tag);
-    }
-
-    public void update(Tag tag) {
+    public void save(Tag tag) {
         tagsRepo.save(tag);
     }
 

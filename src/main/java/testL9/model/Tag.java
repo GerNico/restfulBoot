@@ -8,11 +8,17 @@ public class Tag {
 
     @Id
     private Integer id;
-    private String s;
+    private String content;
 
-    public Tag(Integer id, String s) {
+
+    public Tag(Integer id, String content) {
         this.id = id;
-        this.s = s;
+        this.content = content;
+    }
+
+    public Tag(Tag t) {
+        this.id = t.id;
+        this.content = t.content;
     }
 
     public Tag() {
@@ -26,11 +32,12 @@ public class Tag {
         this.id = id;
     }
 
-    public String getS() {
-        return s;
+    public String getContent() {
+        return content;
     }
 
-    public void setS(String s) {
-        this.s = s;
+    public void setContent(String content) {
+        this.content = content;
     }
+
 }

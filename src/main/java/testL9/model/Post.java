@@ -1,35 +1,47 @@
 package testL9.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class PostInBlog {
+public class Post {
     @Id
     private Integer id;
     private String title;
     private String content;
-    @OneToMany
+    @JsonProperty("tags")
+    @OneToMany( cascade = CascadeType.ALL)
     private List<Tag> tags;
 
-    public PostInBlog(Integer id, String title, String content, List<Tag> tags) {
-        this.id=id;
+    public Post(Integer id, String title, String content, List<Tag> tags) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.tags = tags;
     }
 
-    public PostInBlog(PostInBlog p){
-        this.id=p.id;
+    public Post() {
+    }
+
+    public Post(Post p) {
+        this.id = p.id;
         this.title = p.title;
         this.content = p.content;
         this.tags = p.tags;
     }
 
-    public PostInBlog() {
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public Integer getId() {
@@ -56,11 +68,4 @@ public class PostInBlog {
         this.content = content;
     }
 
-    public List<Tag> getTag() {
-        return tags;
-    }
-
-    public void setTag(List<Tag> tags) {
-        this.tags = tags;
-    }
 }
