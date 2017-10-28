@@ -40,4 +40,21 @@ public class Tag {
         this.content = content;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tag)) return false;
+
+        Tag tag = (Tag) o;
+
+        if (!getId().equals(tag.getId())) return false;
+        return getContent() != null ? getContent().equals(tag.getContent()) : tag.getContent() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + (getContent() != null ? getContent().hashCode() : 0);
+        return result;
+    }
 }
