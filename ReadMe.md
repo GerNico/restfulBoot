@@ -16,25 +16,25 @@ Description of solution:
 ---
 Java REST based web application leveraging Spring Boot was created.
 Basic-Authentication is done (Username: nicolas ; password: password). 
-“In memory db” configured. JUnit tests present, they covers main crud operations with db. 
-In order to be sure in rest controller work, mocks were used. 
+“In memory db” configured. JUnit tests present, they cover main crud operations with db. 
+In order to test rest controller, mocks were used. 
 
-Request mapping is following:
+Request mapping:
 
 method|uri|action
 ------|------------------------|------
-Get | /posts | get all posts
-Get | /posts/{id} | get certain post
-Post | /posts | create post
-Put | /posts/{id} | update certain post
-Delete | /posts/{id} | delete certain post
-Get | /posts/{id}/tags | get tags from certain post
-Get | /posts/{id}/tags/{tagId} | get tag by Id from certain post
-Post | /posts/{id}/tags | create tag in certain post
-Delete | /posts/{id}/tags/{tagId} | delete tag by id from certain post
-Get | /posts/tags | get all tags
-Get | posts/tags/{id} | get certain tag
-Put | /posts/tags/{id} | update certain tag
+GET | /posts | get all posts
+GET | /posts/{id} | get certain post
+POST | /posts | create post
+PUT | /posts/{id} | update certain post
+DELETE | /posts/{id} | delete certain post
+GET | /posts/{id}/tags | get tags from certain post
+GET | /posts/{id}/tags/{tagId} | get tag by Id from certain post
+POST | /posts/{id}/tags | create tag in certain post
+DELETE | /posts/{id}/tags/{tagId} | delete tag by id from certain post
+GET | /posts/tags | get all tags
+GET | posts/tags/{id} | get certain tag
+PUT | /posts/tags/{id} | update certain tag
 
 Postman hints:
 ---

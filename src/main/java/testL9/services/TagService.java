@@ -3,7 +3,7 @@ package testL9.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import testL9.model.Tag;
-import testL9.repositories.TagsRepo;
+import testL9.repositories.TagsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +12,24 @@ import java.util.List;
 public class TagService {
 
     @Autowired
-    TagsRepo tagsRepo;
+    TagsRepository tagsRepository;
 
     public List<Tag> getAll() {
         List<Tag> tags = new ArrayList<>();
-        tagsRepo.findAll().forEach(tags::add);
+        tagsRepository.findAll().forEach(tags::add);
         return tags;
     }
 
     public Tag get(Integer id) {
-        return tagsRepo.findOne(id);
+        return tagsRepository.findOne(id);
     }
 
     public void save(Tag tag) {
-        tagsRepo.save(tag);
+        tagsRepository.save(tag);
     }
 
     public void delete(Integer id) {
-        tagsRepo.delete(id);
+        tagsRepository.delete(id);
     }
 
 }

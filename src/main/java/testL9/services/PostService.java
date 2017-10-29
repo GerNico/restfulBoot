@@ -3,7 +3,7 @@ package testL9.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import testL9.model.Post;
-import testL9.repositories.BlogRepo;
+import testL9.repositories.BlogRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +12,24 @@ import java.util.List;
 public class PostService {
 
     @Autowired
-    BlogRepo blogRepo;
+    BlogRepository blogRepository;
 
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
-        blogRepo.findAll().forEach(posts::add);
+        blogRepository.findAll().forEach(posts::add);
         return posts;
     }
 
     public Post get(Integer id) {
-        return blogRepo.findOne(id);
+        return blogRepository.findOne(id);
     }
 
     public void save(Post post) {
-        blogRepo.save(post);
+        blogRepository.save(post);
     }
 
     public void delete(Integer id) {
-        blogRepo.delete(id);
+        blogRepository.delete(id);
     }
 
 }

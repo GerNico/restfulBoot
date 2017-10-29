@@ -46,8 +46,6 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    //----
-
     @RequestMapping(value = "/posts/{id}/tags", method = RequestMethod.GET)
     public ResponseEntity<List<Tag>> getTagsOfPost(@PathVariable Integer id) {
         return new ResponseEntity<>(postService.get(id).getTags(), HttpStatus.OK);
@@ -73,7 +71,10 @@ public class PostController {
     public ResponseEntity deleteTegFromPost(@PathVariable Integer id, @PathVariable Integer tagId) {
         Post p = postService.get(id);
 
-        if (p.getTags().stream().map(Tag::getId).filter(item -> item.equals(tagId)).count() > 0) {
+        long tagCountWithTagId = p.getTags().stream().map(Tag::getId)
+                .filter(item -> item.equals(tagId)).count();
+
+        if (tagCountWithTagId > 0) {
             p.getTags().removeIf(tag -> tag.getId().equals(tagId));
             postService.save(p);
             return new ResponseEntity(HttpStatus.OK);

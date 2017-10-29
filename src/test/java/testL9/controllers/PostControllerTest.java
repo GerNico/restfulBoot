@@ -1,5 +1,6 @@
 package testL9.controllers;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import testL9.services.PostService;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -25,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PostController.class)
-@AutoConfigureMockMvc(secure=false)
+@AutoConfigureMockMvc(secure = false)
 public class PostControllerTest {
 
     @Autowired
@@ -34,15 +37,23 @@ public class PostControllerTest {
     @MockBean
     private PostService service;
 
-    private Post post1 = new Post(1, "Spring", "3 Steps",
-            Arrays.asList(new Tag(1, "boot"),
-                    new Tag(2, "mvc"),
-                    new Tag(3, "security")));
-    private Post post2 = new Post(2, "Java Core", "2 Steps",
-            Arrays.asList(new Tag(4, "basic core"),
-                    new Tag(5, "advanced topics")));
-    private List<Post> posts = Arrays.asList(post1, post2);
+    private Post post1;
+    private Post post2;
+    private List<Post> posts;
 
+    @Before
+    public void init() {
+        post1 = new Post(1, "Spring", "3 Steps",
+                Arrays.asList(new Tag(1, "boot"),
+                        new Tag(2, "mvc"),
+                        new Tag(3, "security")));
+
+        post2 = new Post(2, "Java Core", "2 Steps",
+                Arrays.asList(new Tag(4, "basic core"),
+                        new Tag(5, "advanced topics")));
+
+        posts = Arrays.asList(post1, post2);
+    }
 
     @Test
     public void testGetAllPosts() throws Exception {
@@ -57,21 +68,21 @@ public class PostControllerTest {
                 .andExpect(jsonPath("$[0].title", is("Spring")))
                 .andExpect(jsonPath("$[0].content", is("3 Steps")))
                 .andExpect(jsonPath("$[0].tags", hasSize(3)))
-                .andExpect(jsonPath("$[0].tags[*].id", containsInAnyOrder(1,2,3)))
+                .andExpect(jsonPath("$[0].tags[*].id", containsInAnyOrder(1, 2, 3)))
                 .andExpect(jsonPath("$[0].tags[*].content", containsInAnyOrder(
-                        "boot","mvc","security")))
+                        "boot", "mvc", "security")))
                 .andExpect(jsonPath("$[1].id", is(2)))
                 .andExpect(jsonPath("$[1].title", is("Java Core")))
                 .andExpect(jsonPath("$[1].content", is("2 Steps")))
                 .andExpect(jsonPath("$[1].tags", hasSize(2)))
-                .andExpect(jsonPath("$[1].tags[*].id", containsInAnyOrder(4,5)))
+                .andExpect(jsonPath("$[1].tags[*].id", containsInAnyOrder(4, 5)))
                 .andExpect(jsonPath("$[1].tags[*].content", containsInAnyOrder(
-                        "basic core","advanced topics")))
+                        "basic core", "advanced topics")))
         ;
     }
 
     @Test
-    public void testGetCertain() throws Exception {
+    public void testGetById() throws Exception {
 
         given(service.get(1)).willReturn(post1);
 
@@ -82,9 +93,9 @@ public class PostControllerTest {
                 .andExpect(jsonPath("$.title", is("Spring")))
                 .andExpect(jsonPath("$.content", is("3 Steps")))
                 .andExpect(jsonPath("$.tags", hasSize(3)))
-                .andExpect(jsonPath("$.tags[*].id", containsInAnyOrder(1,2,3)))
+                .andExpect(jsonPath("$.tags[*].id", containsInAnyOrder(1, 2, 3)))
                 .andExpect(jsonPath("$.tags[*].content", containsInAnyOrder(
-                        "boot","mvc","security")))
+                        "boot", "mvc", "security")))
         ;
     }
 

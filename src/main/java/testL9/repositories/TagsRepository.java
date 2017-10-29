@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import testL9.model.Tag;
 
 @Repository
-public interface TagsRepo extends CrudRepository<Tag, Integer> {
+public interface TagsRepository extends CrudRepository<Tag, Integer> {
 }

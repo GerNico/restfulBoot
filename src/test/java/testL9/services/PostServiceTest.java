@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -55,8 +54,10 @@ public class PostServiceTest {
     }
 
     @Test
-    public void doDeleteTest() {
-        if (postService.get(2) == null) postService.save(post2);
+    public void deleteTest() {
+        if (postService.get(2) == null) {
+            postService.save(post2);
+        }
         Post actual = postService.get(2);
         assertEquals(actual, post2);
         postService.delete(2);
@@ -66,14 +67,16 @@ public class PostServiceTest {
 
 
     @Test
-    public void doUpdateTest() {
-        if (postService.get(2) == null) postService.save(post2);
-        Post updated=new Post(2, "Java Core Updated", "3 Steps",
+    public void updateTest() {
+        if (postService.get(2) == null) {
+            postService.save(post2);
+        }
+        Post updated = new Post(2, "Java Core Updated", "3 Steps",
                 Arrays.asList(new Tag(4, "basic core"),
                         new Tag(5, "advanced topics, design patterns"),
                         new Tag(6, "Java8 Intro")));
         postService.save(updated);
-        Post actual=postService.get(2);
-        assertEquals(actual,updated);
+        Post actual = postService.get(2);
+        assertEquals(actual, updated);
     }
 }
