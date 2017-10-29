@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,11 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PostController.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(secure=false)
 public class PostControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @MockBean
     private PostService service;
@@ -44,43 +43,9 @@ public class PostControllerTest {
                     new Tag(5, "advanced topics")));
     private List<Post> posts = Arrays.asList(post1, post2);
 
-    private String post1Json = "{\"id\": 1," +
-            "  \"title\": \"Spring\"," +
-            "  \"content\": \"3 Steps\"," +
-            "  \"tags\": [" +
-            "    {" +
-            "      \"id\": 1," +
-            "      \"content\": \"boot\"" +
-            "    }," +
-            "    {" +
-            "      \"id\": 2," +
-            "      \"content\": \"mvc\"" +
-            "    }," +
-            "    {" +
-            "      \"id\": 3," +
-            "      \"content\": \"security\"" +
-            "    }" +
-            "  ]" +
-            "}";
-    private String post2Json = "{\"id\": 2," +
-            "  \"title\": \"Java Core\"," +
-            "  \"content\": \"2 Steps\"," +
-            "  \"tags\": [" +
-            "    {" +
-            "      \"id\": 4," +
-            "      \"content\": \"basic core\"" +
-            "    }," +
-            "    {" +
-            "      \"id\": 5," +
-            "      \"content\": \"advanced topics\"" +
-            "    }" +
-            "  ]" +
-            "}";
-    String expected = "[" + post1Json + "," + post2Json + "]";
-
 
     @Test
-    public void testPostController() throws Exception {
+    public void testGetAllPosts() throws Exception {
 
         given(service.getAll()).willReturn(posts);
 
@@ -103,8 +68,24 @@ public class PostControllerTest {
                 .andExpect(jsonPath("$[1].tags[*].content", containsInAnyOrder(
                         "basic core","advanced topics")))
         ;
+    }
 
+    @Test
+    public void testGetCertain() throws Exception {
+
+        given(service.get(1)).willReturn(post1);
+
+        mockMvc.perform(get("/posts/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Spring")))
+                .andExpect(jsonPath("$.content", is("3 Steps")))
+                .andExpect(jsonPath("$.tags", hasSize(3)))
+                .andExpect(jsonPath("$.tags[*].id", containsInAnyOrder(1,2,3)))
+                .andExpect(jsonPath("$.tags[*].content", containsInAnyOrder(
+                        "boot","mvc","security")))
+        ;
     }
 
 }
-
