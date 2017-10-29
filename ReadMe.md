@@ -35,3 +35,25 @@ Delete | /posts/{id}/tags/{tagId} | delete tag by id from certain post
 Get | /posts/tags | get all tags
 Get | posts/tags/{id} | get certain tag
 Put | /posts/tags/{id} | update certain tag
+
+Postman hints:
+---
+Example of dummy blog object with two tags.
+```json
+{  
+   "id":2,
+   "title":"Java Core",
+   "content":"2 Steps",
+   "tags":[  
+      {  
+         "id":4,
+         "content":"basic core"
+      },
+      {  
+         "id":5,
+         "content":"advanced topics"
+      }
+   ]
+}
+```
+
