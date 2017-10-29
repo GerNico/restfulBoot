@@ -11,3 +11,27 @@ A single Post comprises Title, Content, Tags.
 6. No front end is needed, however, the endpoints must be listed in application documentation 
 alongside with the way how to run and work with the application.
 7. Source code should be available on a public git repository.
+
+Description of solution:
+---
+Java REST based web application leveraging Spring Boot was created.
+Basic-Authentication is done (Username: nicolas ; password: password). 
+“In memory db” configured. JUnit tests present, they covers main crud operations with db. 
+In order to be sure in rest controller work, mocks were used. 
+
+Request mapping is following:
+
+method|uri|action
+------|------------------------|------
+Get | /posts | get all posts
+Get | /posts/{id} | get certain post
+Post | /posts | create post
+Put | /posts/{id} | update certain post
+Delete | /posts/{id} | delete certain post
+Get | /posts/{id}/tags | get tags from certain post
+Get | /posts/{id}/tags/{tagId} | get tag by Id from certain post
+Post | /posts/{id}/tags | create tag in certain post
+Delete | /posts/{id}/tags/{tagId} | delete tag by id from certain post
+Get | /posts/tags | get all tags
+Get | posts/tags/{id} | get certain tag
+Put | /posts/tags/{id} | update certain tag
